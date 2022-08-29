@@ -1,0 +1,10 @@
+services:
+  keycloak:
+    image: jboss/keycloak:16.1.1
+    ports:
+      - 8080:8080
+      - 9990:9990
+    environment:
+      KEYCLOAK_USER: kc
+      KEYCLOAK_PASSWORD: kc
+      KEYCLOAK_IMPORT:
