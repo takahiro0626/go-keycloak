@@ -9,12 +9,23 @@ import (
 
 func main() {
     client := gocloak.NewClient("http://localhost:8080")
-	fmt.Println(client)
 	ctx := context.Background()
-	fmt.Println(ctx)
-	jwt, err := client.LoginAdmin(ctx, "test", "password", "master")
+	token, err := client.LoginAdmin(ctx, "kc", "kc", "master")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println(jwt)
+
+	user := gocloak.User{
+		FirstName: gocloak.StringP("Bob"),
+		LastName:  gocloak.StringP("Uncle"),
+		Email:     gocloak.StringP("something@really.wrong"),
+		Enabled:   gocloak.BoolP(true),
+		Username:  gocloak.StringP("CoolGuy"),
+	   }
+	fmt.Println(user.FirstName)
+
+	_, err = client.CreateUser(ctx, token.AccessToken, "test", user)
+    if err != nil {
+        fmt.Println("Failed to create user")
+    }
 }
